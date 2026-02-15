@@ -249,7 +249,89 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section<!-- PAGE 2 : DETAIL PRODUIT (À placer avant le footer) -->
+<div id="product-page" class="page pt-32 pb-16">
+    <div class="max-w-3xl mx-auto px-4">
+        <button onclick="showPage('home')" class="text-primary font-bold mb-6 flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Retour
+        </button>
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <img id="detail-img" src="" class="w-full h-64 object-cover" alt="Detail">
+            <div class="p-8">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 id="detail-title" class="text-3xl font-bold">Nom du Produit</h2>
+                        <p id="detail-vendor" class="text-gray-500 text-lg">Vendeur</p>
+                    </div>
+                    <div id="detail-price" class="text-3xl font-bold text-primary">0 DHS</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded-xl mb-6">
+                    <h4 class="font-bold text-primary mb-1">Que contient ce panier ?</h4>
+                    <p class="text-sm text-gray-600">C'est un panier surprise ! Il contient des produits invendus du jour encore consommables. En l'achetant, vous sauvez environ 1kg de nourriture.</p>
+                </div>
+                <button onclick="showPage('checkout-page')" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 shadow-lg transition">
+                    Procéder au paiement
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 3 : PAIEMENT -->
+<div id="checkout-page" class="page pt-32 pb-16">
+    <div class="max-w-md mx-auto px-4">
+        <div class="bg-white rounded-3xl shadow-xl p-8">
+            <h2 class="text-2xl font-bold mb-6">Paiement Sécurisé</h2>
+            <div class="space-y-4">
+                <div class="flex justify-between border-b pb-4 mb-4">
+                    <span id="checkout-summary-name">Produit</span>
+                    <span id="checkout-summary-price" class="font-bold">0 DHS</span>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">Numéro de carte</label>
+                    <input type="text" placeholder="#### #### #### ####" class="w-full border p-3 rounded-lg focus:outline-primary">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2">Expiration</label>
+                        <input type="text" placeholder="MM/YY" class="w-full border p-3 rounded-lg focus:outline-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2">CVV</label>
+                        <input type="text" placeholder="***" class="w-full border p-3 rounded-lg focus:outline-primary">
+                    </div>
+                </div>
+                <div class="pt-6">
+                    <button onclick="processPayment()" id="pay-btn" class="w-full bg-secondary text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 shadow-lg transition">
+                        Payer maintenant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 4 : REÇU FINAL -->
+<div id="receipt-page" class="page pt-32 pb-16">
+    <div class="max-w-md mx-auto px-4 text-center">
+        <div class="bg-white rounded-3xl shadow-xl p-8 border-t-8 border-primary">
+            <div class="w-20 h-20 bg-green-100 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-4xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Commande Confirmée !</h2>
+            <div class="bg-gray-50 p-6 rounded-2xl mb-6">
+                <p class="text-xs text-gray-400 uppercase font-bold mb-2">Code de Retrait</p>
+                <i class="fas fa-qrcode text-6xl text-gray-800 mb-2"></i>
+                <p class="font-mono text-xl font-bold text-primary">ZG-882-X90</p>
+            </div>
+            <div class="text-left space-y-2 text-sm mb-6">
+                <div class="flex justify-between"><span>Produit:</span> <span id="receipt-name" class="font-bold">...</span></div>
+                <div class="flex justify-between"><span>Total:</span> <span id="receipt-price" class="font-bold text-primary">...</span></div>
+            </div>
+            <button onclick="showPage('home')" class="w-full border-2 border-primary text-primary py-3 rounded-xl font-bold">Retour à l'accueil</button>
+        </div>
+    </div>
+</div>
 
     <!-- Concept Section (Modèle AIDA) -->
     <section id="concept" class="py-20 bg-primary text-white">
@@ -329,7 +411,7 @@
                     </p>
                     <div class="flex items-center text-gray-400 mt-4">
                         <i class="fas fa-envelope mr-2 text-secondary"></i>
-                        <a href="mailto:contact@zerogaspi.ma" class="hover:text-white transition">contact@zerogaspi.ma</a>
+                        <a href="Zerogaspi@gmail.com" class="hover:text-white transition">Zerogspi@gmail.com</a>
                     </div>
                 </div>
                 <div>
@@ -346,9 +428,6 @@
                         <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
                             <i class="fab fa-instagram"></i 
                         </a>
-                    </div>
-                </div>
-            </div>
             <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
                 <p>&copy; 2026 ZeroGaspi. Tous droits réservés.</p>
             </div>
