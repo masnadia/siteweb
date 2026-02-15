@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroGaspi - Moins de gaspillage, plus de valeur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);
+        }
+
+        .bg-primary { background-color: #2D6A4F; }
+        .text-primary { color: #2D6A4F; }
+        .bg-secondary { background-color: #FF8C42; }
+        .hover-primary:hover { background-color: #1b4332; }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            width: 3rem;
+            height: 3rem;
+            background-color: #FF8C42;
+            color: white;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-primary">ZeroGaspi</span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium">
+                    <a href="#concept" class="hover:text-primary transition">Concept</a>
+                    <a href="#commander" class="hover:text-primary transition">Comment ça marche</a>
+                    <a href="#paniers" class="hover:text-primary transition">Nos Paniers</a>
+                    <a href="#contact" class="hover:text-primary transition">Contact</a>
+                </div>
+                <a href="#paniers" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover-primary transition">
+                    Commander
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 space-y-6 text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                    Sauvez la planète, <br>
+                    <span class="text-primary">Mangez à prix réduit.</span>
+                </h1>
+                <p class="text-lg text-gray-600 max-w-lg mx-auto md:mx-0">
+                    Rejoignez ZeroGaspi et récupérez les invendus de vos commerçants préférés sous forme de paniers surprises. Une solution simple, économique et écologique au Maroc.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+                    <a href="#paniers" class="bg-primary text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center space-x-2 hover-primary transition shadow-lg">
+                        <i class="fas fa-shopping-basket"></i>
+                        <span>Voir les paniers</span>
+                    </a>
+                </div>
+                <p class="text-sm text-gray-500 italic font-medium">
+                    "Moins de gaspillage, plus de valeur"
+                </p>
+            </div>
+            <!-- Image Hero Remplaçant le téléphone -->
+            <div class="md:w-1/2 relative">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition duration-500">
+                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Panier de légumes frais" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+                        <div class="text-white">
+                            <p class="font-bold text-xl">Panier Marché Frais</p>
+                            <p class="text-sm opacity-90">Sauvé aujourd'hui </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Badge Flottant -->
+                <div class="absolute -top-6 -right-6 bg-secondary text-white p-4 rounded-full shadow-lg font-bold rotate-12 animate-bounce">
+                    -50%
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Problématique Section -->
+    <section id="problematique" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 text-gray-900">Le problème que nous résolvons</h2>
+                <div class="h-1 w-20 bg-secondary mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-gray-50 rounded-2xl text-center card-shadow hover:translate-y-[-5px] transition-transform">
+                    <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-trash-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Gaspillage Massif</h3>
+                    <p class="text-gray-600">Des tonnes de produits consommables sont jetées car elles approchent de leur date limite.</p>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-2xl text-center card-shadow hover:translate-y-[-5px] transition-transform">
+                    <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-money-bill-wave text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Perte Financière</h3>
+                    <p class="text-gray-600">Les commerçants perdent de l'argent sur leurs invendus au lieu de les valoriser.</p>
+                </div>
+                <div class="p-8 bg-gray-50 rounded-2xl text-center card-shadow hover:translate-y-[-5px] transition-transform">
+                    <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-wallet text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Pouvoir d'achat</h3>
+                    <p class="text-gray-600">Les consommateurs cherchent des moyens d'économiser sur leur budget alimentaire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Comment Commander (Nouvelle) -->
+    <section id="commander" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 text-gray-900">Comment commander ?</h2>
+                <p class="text-gray-600">Sauver un panier n'a jamais été aussi simple.</p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8 relative">
+                <!-- Ligne de connexion (desktop) -->
+                <div class="hidden md:block absolute top-12 left-0 w-full h-1 bg-gray-200 -z-10 transform -translate-y-1/2"></div>
+
+                <!-- Etape 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center relative">
+                    <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">1</div>
+                    <h3 class="font-bold text-lg mb-2">Localisez</h3>
+                    <p class="text-sm text-gray-600">Ouvrez le site et trouvez les commerçants partenaires autour de vous.</p>
+                </div>
+
+                <!-- Etape 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center relative">
+                    <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">2</div>
+                    <h3 class="font-bold text-lg mb-2">Choisissez</h3>
+                    <p class="text-sm text-gray-600">Sélectionnez un "Panier Surprise" selon vos goûts (Boulangerie, Repas, Mixte).</p>
+                </div>
+
+                <!-- Etape 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center relative">
+                    <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">3</div>
+                    <h3 class="font-bold text-lg mb-2">Réservez</h3>
+                    <p class="text-sm text-gray-600">Payez votre commande directement en ligne à prix réduit.</p>
+                </div>
+
+                <!-- Etape 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-md text-center relative">
+                    <div class="w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4 border-4 border-white">4</div>
+                    <h3 class="font-bold text-lg mb-2">Récupérez</h3>
+                    <p class="text-sm text-gray-600">Présentez votre reçu au commerçant à l'heure indiquée et profitez !</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Nos Paniers (Nouvelle avec Photos) -->
+    <section id="paniers" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 text-gray-900">Découvrez nos Paniers Surprises</h2>
+                <p class="text-gray-600">Voici ce que vous pourriez sauver aujourd'hui.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Panier 1 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group hover:shadow-2xl transition duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Panier Boulangerie" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Boulangerie</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Panier Petit-Déj</h3>
+                        <p class="text-gray-600 text-sm mb-4">Un assortiment de viennoiseries, pains spéciaux et douceurs du jour.</p>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <div>
+                                <span class="text-gray-400 line-through text-sm">60 DHS</span>
+                                <span class="text-primary font-bold text-xl ml-2">20 DHS</span>
+                            </div>
+                            <button class="bg-secondary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Commander</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panier 2 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group hover:shadow-2xl transition duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Panier Fruits et Légumes" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Supermarché</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Panier Fraîcheur</h3>
+                        <p class="text-gray-600 text-sm mb-4">Fruits et légumes de saison légèrement abîmés ou en surplus.</p>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <div>
+                                <span class="text-gray-400 line-through text-sm">80 DHS</span>
+                                <span class="text-primary font-bold text-xl ml-2">30 DHS</span>
+                            </div>
+                            <button class="bg-secondary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Commander</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panier 3 -->
+                <div class="rounded-2xl overflow-hidden shadow-lg group hover:shadow-2xl transition duration-300">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Panier Repas" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Restaurant</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Menu Découverte</h3>
+                        <p class="text-gray-600 text-sm mb-4">Plats du jour ou spécialités du chef à récupérer après le service.</p>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <div>
+                                <span class="text-gray-400 line-through text-sm">100 DHS</span>
+                                <span class="text-primary font-bold text-xl ml-2">40 DHS</span>
+                            </div>
+                            <button class="bg-secondary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Commander</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Section (Modèle AIDA) -->
+    <section id="concept" class="py-20 bg-primary text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-8">Pourquoi ZeroGaspi ?</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">1</div>
+                            <div>
+                                <h4 class="font-bold text-lg">Attention</h4>
+                                <p class="text-primary-100 text-green-50">Découvrez les commerces autour de vous qui ont des produits proches de l'expiration.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-lg">Intérêt</h4>
+                                <p class="text-primary-100 text-green-50">Des packs variés et économiques à récupérer en 2 ou 3 jours seulement.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-lg">Désir</h4>
+                                <p class="text-primary-100 text-green-50">Contribuez à l'écologie tout en réduisant vos factures de moitié.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-secondary text-white font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0">4</div>
+                            <div>
+                                <h4 class="font-bold text-lg">Action</h4>
+                                <p class="text-primary-100 text-green-50">Réservez en ligne, payez et récupérez votre commande en magasin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-white/10 p-8 rounded-3xl backdrop-blur-sm">
+                    <h3 class="text-2xl font-bold mb-6">Notre Proposition de Valeur</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-center space-x-3 text-lg">
+                            <i class="fas fa-check-circle text-secondary text-xl"></i>
+                            <span>Packs de qualité à prix réduit</span>
+                        </li>
+                        <li class="flex items-center space-x-3 text-lg">
+                            <i class="fas fa-check-circle text-secondary text-xl"></i>
+                            <span>Réduction de l'empreinte carbone</span>
+                        </li>
+                        <li class="flex items-center space-x-3 text-lg">
+                            <i class="fas fa-check-circle text-secondary text-xl"></i>
+                            <span>Solution Gagnant-Gagnant</span>
+                        </li>
+                        <li class="flex items-center space-x-3 text-lg">
+                            <i class="fas fa-check-circle text-secondary text-xl"></i>
+                            <span>Soutien à l'économie locale</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <i class="fas fa-leaf text-sm"></i>
+                        </div>
+                        <span class="text-2xl font-bold">ZeroGaspi</span>
+                    </div>
+                    <p class="text-gray-400 max-w-sm mb-4">
+                        ZeroGaspi est une initiative marocaine dédiée à la lutte contre le gaspillage alimentaire. Notre mission est de favoriser une consommation plus responsable.
+                    </p>
+                    <div class="flex items-center text-gray-400 mt-4">
+                        <i class="fas fa-envelope mr-2 text-secondary"></i>
+                        <a href="mailto:contact@zerogaspi.ma" class="hover:text-white transition">contact@zerogaspi.ma</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6">Projet</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#concept" class="hover:text-white transition">À propos</a></li>
+                        <li><a href="#commander" class="hover:text-white transition">Comment ça marche</a></li>
+                        <li><a href="#paniers" class="hover:text-white transition">Paniers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6">Suivez-nous</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary transition">
+                            <i class="fab fa-instagram"></i 
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 ZeroGaspi. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
