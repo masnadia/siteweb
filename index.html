@@ -243,13 +243,8 @@
                                 <span class="text-gray-400 line-through text-sm">100 DHS</span>
                                 <span class="text-primary font-bold text-xl ml-2">40 DHS</span>
                             </div>
-                            <button class="bg-secondary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Commander</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section<!-- PAGE 2 : DETAIL PRODUIT (À placer avant le footer) -->
+                            <button id="btnCommander" class="bg-secondary text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Commander</button>
+                            <!-- PAGE 2 : DETAIL PRODUIT (À placer avant le footer) -->
 <div id="product-page" class="page pt-32 pb-16">
     <div class="max-w-3xl mx-auto px-4">
         <button onclick="showPage('home')" class="text-primary font-bold mb-6 flex items-center">
@@ -332,6 +327,12 @@
         </div>
     </div>
 </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Concept Section (Modèle AIDA) -->
     <section id="concept" class="py-20 bg-primary text-white">
@@ -444,5 +445,19 @@
             });
         });
     </script>
+                    <script>
+  // Récupérer le bouton et le div
+  const btn = document.getElementById("btnCommander");
+  const modif = document.getElementById("modifications");
+
+  // Quand on clique sur le bouton
+  btn.addEventListener("click", function() {
+    modif.style.display = "block"; // Affiche le div
+    modif.innerHTML = `
+      <h2>Voici votre section de commande !</h2>
+      <p>Ajoute ici ton formulaire ou autre contenu.</p>
+    `;
+  });
+</script>
 </body>
 </html>
