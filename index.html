@@ -403,7 +403,7 @@
         <p class="text-gray-600 text-sm mb-4 line-clamp-2">Yaourts, jus, biscuits ou conserves proches de la date limite. Idéal pour remplir le frigo à petit prix.</p>
         
         <div class="flex items-center text-xs text-gray-500 mb-4 space-x-4">
-            <span><i class="far fa-clock mr-1"></i> 10:00 - 00:00</span>
+            <span><i class="far fa-clock mr-1"></i> 10:00 - 22:00</span>
             <span><i class="fas fa-map-marker-alt mr-1"></i> Quartier Océan</span>
         </div>
 
@@ -412,8 +412,8 @@
                 <span class="text-gray-400 line-through text-xs font-medium">50 DHS</span>
                 <span class="text-primary font-bold text-xl">15 DHS</span>
             </div>
-            <button onclick="selectProduct('Pack Hanout Surprise', '25 DHS', 'Épicerie du Coin', 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" class="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-md transform active:scale-95">
-                Commander
+            <button onclick="selectProduct('Pack Hanout Surprise', '15 DHS', 'Épicerie du Coin', 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" class="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-md transform active:scale-95">
+                Sauver
             </button>
         </div>
     </div>
@@ -437,7 +437,7 @@
         <p class="text-gray-600 text-sm mb-4 line-clamp-2">Assortiment de briouates, chebakia et ghriba de la veille. Parfait avec un thé à la menthe !</p>
         
         <div class="flex items-center text-xs text-gray-500 mb-4 space-x-4">
-            <span><i class="far fa-clock mr-1"></i> 18:00 - 22:00</span>
+            <span><i class="far fa-clock mr-1"></i> 16:00 - 20:00</span>
             <span><i class="fas fa-map-marker-alt mr-1"></i> Médina</span>
         </div>
 
@@ -447,7 +447,7 @@
                 <span class="text-primary font-bold text-xl">35 DHS</span>
             </div>
             <button onclick="selectProduct('Box Pâtisserie Beldi', '35 DHS', 'Pâtisserie Al Andalous', 'https://images.unsplash.com/photo-1589119908995-c6837fa14848?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" class="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-md transform active:scale-95">
-                Commander
+                Sauver
             </button>
         </div>
     </div>
@@ -471,11 +471,11 @@
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
             </div>
         </div>
-        <p class="text-gray-600 text-sm mb-4 line-clamp-2"> Pizza, paninis ou tacos préparés en trop lors du service de midi. Réchauffez et dégustez.</p>
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Parts de pizza, paninis ou tacos préparés en trop lors du service de midi. Réchauffez et dégustez.</p>
         
         <div class="flex items-center text-xs text-gray-500 mb-4 space-x-4">
-            <span><i class="far fa-clock mr-1"></i> 22:30 - 05:00</span>
-            <span><i class="fas fa-map-marker-alt mr-1"></i> HAY NAHDA</span>
+            <span><i class="far fa-clock mr-1"></i> 15:30 - 17:00</span>
+            <span><i class="fas fa-map-marker-alt mr-1"></i> Maarif</span>
         </div>
 
         <div class="flex justify-between items-center border-t pt-4 border-gray-100">
@@ -484,7 +484,7 @@
                 <span class="text-primary font-bold text-xl">25 DHS</span>
             </div>
             <button onclick="selectProduct('Box Fin de Service', '25 DHS', 'Snack Milano', 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')" class="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-orange-600 transition shadow-md transform active:scale-95">
-                commander
+                Sauver
             </button>
         </div>
     </div>
@@ -749,7 +749,110 @@
     </footer>
 
     <script>
-       <!-- 1. CSS (À ajouter dans vos styles) -->
+        // Variables globales pour stocker les infos du panier sélectionné
+        let currentProduct = {
+            name: '',
+            price: '',
+            vendor: ''
+        };
+
+        // Fonction pour naviguer entre les pages
+        function showPage(pageId) {
+            // Masquer toutes les pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+                // Petit délai pour permettre l'animation de fade-out si on voulait en ajouter une
+                setTimeout(() => {
+                    if(!page.classList.contains('active')) page.style.display = 'none';
+                }, 300);
+            });
+
+            // Afficher la page demandée
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Petit délai pour permettre au navigateur de rendre le display:block avant d'ajouter l'opacité
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
+                
+                // Scroll en haut de page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Fonction appelée quand on clique sur "Commander"
+        function selectProduct(name, price, vendor, imgUrl) {
+            // Stocker les infos
+            currentProduct = { name, price, vendor };
+
+            // Mettre à jour la page Détail
+            document.getElementById('detail-title').innerText = name;
+            document.getElementById('detail-price').innerText = price;
+            document.getElementById('detail-vendor').innerText = vendor;
+            document.getElementById('detail-img').src = imgUrl;
+
+            // Mettre à jour la page Checkout (résumé)
+            document.getElementById('checkout-summary-name').innerText = name;
+            document.getElementById('checkout-summary-price').innerText = price;
+
+            // Mettre à jour la page Reçu
+            document.getElementById('receipt-name').innerText = name;
+            document.getElementById('receipt-price').innerText = price;
+
+            // Afficher la page produit
+            showPage('product-page');
+        }
+
+        // Fonction de simulation de paiement
+        function processPayment() {
+            const btn = document.getElementById('pay-btn');
+            const originalText = btn.innerHTML;
+            
+            // État de chargement
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Simulation d'un délai réseau (1.5 secondes)
+            setTimeout(() => {
+                // Rétablir le bouton (au cas où on revienne)
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                
+                // Aller à la page de reçu
+                showPage('receipt-page');
+            }, 1500);
+        }
+
+        // Gestion des liens d'ancrage classiques pour qu'ils fonctionnent avec le système de pages
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Si le lien est juste "#", on ne fait rien (géré par onclick)
+                if(this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                
+                // On s'assure d'abord qu'on est sur la home
+                showPage('home');
+                
+                // Puis on scroll vers l'élément
+                setTimeout(() => {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }, 100); // Petit délai pour laisser le temps à la home de s'afficher
+            });
+        });
+    </script>
+    <!-- 1. CSS (À ajouter dans vos styles) -->
 <style>
     .chatbot-window { 
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -757,23 +860,6 @@
     }
     .chatbot-hidden { transform: scale(0) translateY(100px); opacity: 0; pointer-events: none; }
     .chatbot-visible { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
-    
-    /* Style pour rendre la liste de produits défilable proprement */
-    .products-grid {
-        max-height: 160px;
-        overflow-y: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-        padding-right: 4px;
-    }
-    .products-grid::-webkit-scrollbar {
-        width: 4px;
-    }
-    .products-grid::-webkit-scrollbar-thumb {
-        background: #10b981;
-        border-radius: 10px;
-    }
 </style>
 
 <!-- 2. HTML (À placer avant </body>) -->
@@ -781,7 +867,7 @@
     <!-- Bouton flottant -->
     <button onclick="toggleChat()" class="bg-emerald-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:bg-emerald-700 transition-all hover:scale-110 active:scale-95 group relative">
         <i class="fas fa-comment-dots text-2xl group-hover:hidden"></i>
-        <i class="fas fa-times text-2xl hidden group-hover:block" id="chat-close-icon"></i>
+        <i class="fas fa-times text-2xl hidden group-hover:block"></i>
         <span class="absolute -top-2 -left-2 bg-red-500 text-[10px] px-2 py-1 rounded-full font-bold animate-bounce text-white">Nouveau !</span>
     </button>
 
@@ -806,18 +892,17 @@
         </div>
 
         <!-- Options dynamiques -->
-        <div id="chat-options" class="p-4 bg-white border-t border-gray-100">
-            <button onclick="startCustomPack()" class="w-full bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold uppercase italic hover:bg-emerald-700 transition">
+        <div id="chat-options" class="p-4 bg-white border-t border-gray-100 grid grid-cols-2 gap-2">
+            <button onclick="startCustomPack()" class="col-span-2 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold uppercase italic hover:bg-emerald-700 transition">
                 Créer mon pack (Custom)
             </button>
         </div>
     </div>
 </div>
 
-<!-- 3. JAVASCRIPT -->
+<!-- 3. JAVASCRIPT (À ajouter dans votre balise <script>) -->
 <script>
     let customPack = [];
-    const MAX_ITEMS = 3; // Vous pouvez changer ce nombre ici
 
     function toggleChat() {
         const chatWin = document.getElementById('chat-window');
@@ -835,48 +920,35 @@
     }
 
     function startCustomPack() {
-        customPack = []; // Reset si on recommence
         document.getElementById('chat-options').innerHTML = '';
-        addBotMessage(`Génial ! Choisissez **${MAX_ITEMS} articles** pour votre pack à seulement **45 DHS**.`);
+        addBotMessage("Génial ! Choisissez 3 articles pour votre pack à seulement **45 DHS**.");
         
-        // --- VOS PRODUITS ICI ---
         const products = [
-            { id: 'p1', name: '3kg Tomates', icon: '🍅' },
-            { id: 'p2', name: '1kg Oranges', icon: '🍊' },
-            { id: 'p3', name: 'Pain Artisanal', icon: '🥖' },
-            { id: 'p4', name: 'Yaourts (x4)', icon: '🥛' },
-            { id: 'p5', name: '1kg Bananes', icon: '🍌' },
-            { id: 'p6', name: 'Fromage Beldi', icon: '🧀' },
-            { id: 'p7', name: 'Douzaine d\'Œufs', icon: '🥚' },
-            { id: 'p8', name: 'Sachet de Thé', icon: '🍵' }
+            { id: 'v1', name: '3kg Tomates', icon: '🍅' },
+            { id: 'v2', name: '1kg Oranges', icon: '🍊' },
+            { id: 'v3', name: 'Pain Artisanal', icon: '🥖' },
+            { id: 'v4', name: 'Yaourts (x4)', icon: '🥛' }
         ];
 
-        // Création de la grille défilable
-        let html = '<div class="products-grid">';
+        let html = '';
         products.forEach(p => {
-            html += `
-            <button onclick="addEntryToPack('${p.name.replace(/'/g, "\\'")}')" class="bg-gray-50 border border-gray-100 p-2 rounded-xl text-[10px] font-bold hover:bg-emerald-50 hover:border-emerald-200 transition flex flex-col items-center">
+            html += `<button onclick="addEntryToPack('${p.name}')" class="bg-gray-50 border border-gray-100 p-2 rounded-xl text-[10px] font-bold hover:bg-emerald-50 hover:border-emerald-200 transition flex flex-col items-center">
                 <span class="text-lg">${p.icon}</span> ${p.name}
             </button>`;
         });
-        html += '</div>';
-        
         document.getElementById('chat-options').innerHTML = html;
     }
 
     function addEntryToPack(itemName) {
-        if (customPack.length < MAX_ITEMS) {
+        if (customPack.length < 3) {
             customPack.push(itemName);
-            addBotMessage(`Ajouté : **${itemName}** (${customPack.length}/${MAX_ITEMS})`);
+            addBotMessage(`Ajouté : **${itemName}** (${customPack.length}/3)`);
             
-            if (customPack.length === MAX_ITEMS) {
+            if (customPack.length === 3) {
                 addBotMessage("Votre pack est complet ! Je l'ajoute à votre panier ?");
                 document.getElementById('chat-options').innerHTML = `
-                    <button onclick="confirmCustomPack()" class="w-full bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold uppercase italic shadow-lg active:scale-95 transition">
+                    <button onclick="confirmCustomPack()" class="col-span-2 bg-emerald-600 text-white py-3 rounded-xl text-xs font-bold uppercase italic shadow-lg">
                         Confirmer le pack (45 DHS)
-                    </button>
-                    <button onclick="startCustomPack()" class="w-full mt-2 text-gray-400 text-[10px] uppercase font-bold hover:text-red-500 transition">
-                        Recommencer
                     </button>
                 `;
             }
@@ -885,24 +957,18 @@
 
     function confirmCustomPack() {
         const packName = "Pack Perso: " + customPack.join(', ');
-        
-        // Vérification de la fonction addToCart sur votre site
+        // On appelle la fonction addToCart déjà existante dans votre site
         if (typeof addToCart === 'function') {
             addToCart(packName, 45, 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80');
-        } else {
-            console.error("La fonction addToCart n'est pas trouvée sur la page principale.");
         }
-
         toggleChat();
-        
-        // Reset du chat pour la prochaine fois
+        customPack = [];
+        // Reset du chat après 1 seconde
         setTimeout(() => {
-            customPack = [];
             document.getElementById('chat-messages').innerHTML = `<div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 border border-gray-100 max-w-[85%]">Salam ! 👋 Je peux vous aider à composer votre propre pack personnalisé.</div>`;
-            document.getElementById('chat-options').innerHTML = `<button onclick="startCustomPack()" class="w-full bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold uppercase italic hover:bg-emerald-700 transition">Créer mon pack (Custom)</button>`;
+            document.getElementById('chat-options').innerHTML = `<button onclick="startCustomPack()" class="col-span-2 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold uppercase italic hover:bg-emerald-700 transition">Créer mon pack (Custom)</button>`;
         }, 1000);
     }
-</script>
 </script>
 </body>
 </html>
