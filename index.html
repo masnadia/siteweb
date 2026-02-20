@@ -67,6 +67,24 @@
             display: block;
             opacity: 1;
         }
+
+        /* Styles pour le bouton panier flottant */
+        #cart-count {
+            display: none;
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background-color: #dc2626; /* red-600 */
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body class="text-gray-800 bg-white">
@@ -1211,6 +1229,30 @@
                 </div>
             </div>
         </div>
+
+        <!-- PAGE PANIER -->
+        <div id="cart-page" class="page pt-32 pb-16 px-4 max-w-4xl mx-auto" style="display:none;">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">Votre Panier</h2>
+            <div id="cart-items" class="space-y-4 mb-8">
+                <!-- Les produits ajoutés apparaîtront ici -->
+            </div>
+            <div class="flex justify-between items-center border-t pt-4 border-gray-300 mb-8">
+                <span class="text-xl font-bold">Total:</span>
+                <span id="cart-total" class="text-2xl font-bold text-primary">0 DHS</span>
+            </div>
+            <button
+                onclick="checkoutFromCart()"
+                class="w-full bg-secondary text-white py-4 rounded-xl font-bold text-lg hover:bg-orange-600 shadow-lg transition transform active:scale-[0.99]"
+            >
+                Commander tout
+            </button>
+            <button
+                onclick="showPage('home')"
+                class="mt-4 w-full bg-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-400 transition"
+            >
+                Continuer mes achats
+            </button>
+        </div>
     </div>
     <!-- FIN DU CONTAINER PRINCIPAL -->
 
@@ -1317,129 +1359,18 @@
         </div>
     </footer>
 
-    <script>
-        // Variables globales pour stocker les infos du panier sélectionné
-        let currentProduct = {
-            name: '',
-            price: '',
-            vendor: '',
-        };
+    <!-- Bouton Panier Flottant -->
+    <button
+        id="open-cart-btn"
+        onclick="toggleCart()"
+        class="fixed bottom-28 right-6 z-50 bg-primary text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center hover:bg-green-800 transition-all hover:scale-110 active:scale-95"
+        aria-label="Ouvrir le panier"
+    >
+        <i class="fas fa-shopping-cart text-2xl"></i>
+        <span id="cart-count" class="absolute top-1 right-1 bg-red-600 rounded-full text-xs w-5 h-5 flex items-center justify-center text-white font-bold">0</span>
+    </button>
 
-        // Fonction pour naviguer entre les pages
-        function showPage(pageId) {
-            // Masquer toutes les pages
-            const pages = document.querySelectorAll('.page');
-            pages.forEach((page) => {
-                page.classList.remove('active');
-                // Petit délai pour permettre l'animation de fade-out si on voulait en ajouter une
-                setTimeout(() => {
-                    if (!page.classList.contains('active')) page.style.display = 'none';
-                }, 300);
-            });
-
-            // Afficher la page demandée
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-                // Petit délai pour permettre au navigateur de rendre le display:block avant d'ajouter l'opacité
-                setTimeout(() => {
-                    targetPage.classList.add('active');
-                }, 10);
-
-                // Scroll en haut de page
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // Fonction appelée quand on clique sur "Commander"
-        function selectProduct(name, price, vendor, imgUrl) {
-            // Stocker les infos
-            currentProduct = { name, price, vendor };
-
-            // Mettre à jour la page Détail
-            document.getElementById('detail-title').innerText = name;
-            document.getElementById('detail-price').innerText = price;
-            document.getElementById('detail-vendor').innerText = vendor;
-            document.getElementById('detail-img').src = imgUrl;
-
-            // Mettre à jour la page Checkout (résumé)
-            document.getElementById('checkout-summary-name').innerText = name;
-            document.getElementById('checkout-summary-price').innerText = price;
-
-            // Mettre à jour la page Reçu
-            document.getElementById('receipt-name').innerText = name;
-            document.getElementById('receipt-price').innerText = price;
-
-            // Afficher la page produit
-            showPage('product-page');
-        }
-
-        // Fonction de simulation de paiement
-        function processPayment() {
-            const btn = document.getElementById('pay-btn');
-            const originalText = btn.innerHTML;
-
-            // État de chargement
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
-            btn.disabled = true;
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-
-            // Simulation d'un délai réseau (1.5 secondes)
-            setTimeout(() => {
-                // Rétablir le bouton (au cas où on revienne)
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-
-                // Aller à la page de reçu
-                showPage('receipt-page');
-            }, 1500);
-        }
-
-        // Gestion des liens d'ancrage classiques pour qu'ils fonctionnent avec le système de pages
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener('click', function (e) {
-                // Si le lien est juste "#", on ne fait rien (géré par onclick)
-                if (this.getAttribute('href') === '#') return;
-
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-
-                // On s'assure d'abord qu'on est sur la home
-                showPage('home');
-
-                // Puis on scroll vers l'élément
-                setTimeout(() => {
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start',
-                        });
-                    }
-                }, 100); // Petit délai pour laisser le temps à la home de s'afficher
-            });
-        });
-    </script>
-    <!-- 1. CSS (À ajouter dans vos styles) -->
-    <style>
-        .chatbot-window {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: bottom right;
-        }
-        .chatbot-hidden {
-            transform: scale(0) translateY(100px);
-            opacity: 0;
-            pointer-events: none;
-        }
-        .chatbot-visible {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-    </style>
-
-    <!-- 2. HTML (À placer avant </body>) -->
+    <!-- Chatbot -->
     <div class="fixed bottom-6 right-6 z-50">
         <!-- Bouton flottant -->
         <button
@@ -1506,8 +1437,250 @@
         </div>
     </div>
 
-    <!-- 3. JAVASCRIPT (À ajouter dans votre balise <script>) -->
     <script>
+        // Variables globales pour stocker les infos du panier sélectionné
+        let currentProduct = {
+            name: '',
+            price: '',
+            vendor: '',
+        };
+
+        // Nouveau tableau panier global
+        let cart = [];
+
+        // Mise à jour afficheur nombre articles panier flottant
+        function updateCartCount() {
+            const countSpan = document.getElementById('cart-count');
+            countSpan.innerText = cart.length;
+            countSpan.style.display = cart.length > 0 ? 'flex' : 'none';
+        }
+
+        // Ajouter un produit au panier
+        function addToCart(name, priceString, vendor, imgUrl) {
+            // si le prix est un nombre ou string, on convertit en string format "xx DHS"
+            let price = 0;
+            if (typeof priceString === 'number') {
+                price = priceString;
+                priceString = priceString + ' DHS';
+            } else if (typeof priceString === 'string') {
+                price = parseFloat(priceString.replace(/[^\d\.]/g, '')) || 0;
+            }
+
+            const product = { name, price, vendor, imgUrl, quantity: 1 };
+
+            // Si produit déjà dans le panier, augmenter quantité
+            const existingIndex = cart.findIndex(p => p.name === name && p.vendor === vendor);
+            if (existingIndex !== -1) {
+                cart[existingIndex].quantity++;
+            } else {
+                cart.push(product);
+            }
+
+            updateCartCount();
+            alert(`"${name}" ajouté au panier !`);
+        }
+
+        // Afficher la page panier avec tous les articles
+        function showCart() {
+            const cartPage = document.getElementById('cart-page');
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center text-gray-500">Votre panier est vide.</p>';
+                document.getElementById('cart-total').innerText = '0 DHS';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex items-center space-x-4 border p-4 rounded-lg border-gray-200';
+
+                itemDiv.innerHTML = `
+                    <img src="${item.imgUrl}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg" />
+                    <div class="flex-grow">
+                        <h3 class="font-semibold">${item.name}</h3>
+                        <p class="text-xs text-gray-500">${item.vendor}</p>
+                        <p class="text-sm font-bold">${item.price} DHS</p>
+                        <p>Quantité : 
+                            <button onclick="changeQuantity(${index}, -1)" class="px-2 bg-gray-200 rounded">-</button>
+                            <span id="qty-${index}">${item.quantity}</span>
+                            <button onclick="changeQuantity(${index}, 1)" class="px-2 bg-gray-200 rounded">+</button>
+                        </p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                `;
+
+                cartItemsContainer.appendChild(itemDiv);
+            });
+
+            document.getElementById('cart-total').innerText = `${total.toFixed(2)} DHS`;
+        }
+
+        // Changer quantité d'un produit dans panier
+        function changeQuantity(index, delta) {
+            if (cart[index]) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity < 1) cart[index].quantity = 1;
+                showCart();
+            }
+        }
+
+        // Supprimer article du panier
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            showCart();
+        }
+
+        // Ouvrir/fermer le panier
+        function toggleCart() {
+            const cartPage = document.getElementById('cart-page');
+            if (cartPage.classList.contains('active')) {
+                showPage('home');
+            } else {
+                showPage('cart-page');
+                showCart();
+            }
+        }
+
+        // Gestion boutique existante : rediriger vers paiement de tout le panier
+        function checkoutFromCart() {
+            if (cart.length === 0) {
+                alert('Votre panier est vide.');
+                return;
+            }
+
+            // Simuler transfert d'un résumé produit
+            let summaryName = cart.map(item => `${item.name} x${item.quantity}`).join(', ');
+            let summaryPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            currentProduct = {
+                name: summaryName,
+                price: summaryPrice.toFixed(2) + ' DHS',
+                vendor: 'Multi-vendeurs',
+            };
+            
+            // Mettre à jour pages comme avec selectProduct
+            document.getElementById('detail-title').innerText = currentProduct.name;
+            document.getElementById('detail-price').innerText = currentProduct.price;
+            document.getElementById('detail-vendor').innerText = currentProduct.vendor;
+            document.getElementById('detail-img').src = 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80';
+
+            document.getElementById('checkout-summary-name').innerText = currentProduct.name;
+            document.getElementById('checkout-summary-price').innerText = currentProduct.price;
+
+            document.getElementById('receipt-name').innerText = currentProduct.name;
+            document.getElementById('receipt-price').innerText = currentProduct.price;
+
+            showPage('checkout-page');
+        }
+
+        // Fonction pour naviguer entre les pages
+        function showPage(pageId) {
+            // Masquer toutes les pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach((page) => {
+                page.classList.remove('active');
+                // Petit délai pour permettre l'animation de fade-out si on voulait en ajouter une
+                setTimeout(() => {
+                    if (!page.classList.contains('active')) page.style.display = 'none';
+                }, 300);
+            });
+
+            // Afficher la page demandée
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Petit délai pour permettre au navigateur de rendre le display:block avant d'ajouter l'opacité
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
+
+                // Scroll en haut de page
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Fonction appelée quand on clique sur "Commander"
+        function selectProduct(name, price, vendor, imgUrl) {
+            // Stocker les infos
+            currentProduct = { name, price, vendor };
+
+            // Mettre à jour la page Détail
+            document.getElementById('detail-title').innerText = name;
+            document.getElementById('detail-price').innerText = price;
+            document.getElementById('detail-vendor').innerText = vendor;
+            document.getElementById('detail-img').src = imgUrl;
+
+            // Mettre à jour la page Checkout (résumé)
+            document.getElementById('checkout-summary-name').innerText = name;
+            document.getElementById('checkout-summary-price').innerText = price;
+
+            // Mettre à jour la page Reçu
+            document.getElementById('receipt-name').innerText = name;
+            document.getElementById('receipt-price').innerText = price;
+
+            addToCart(name, price, vendor, imgUrl);
+            showPage('product-page');
+        }
+
+        // Fonction de simulation de paiement
+        function processPayment() {
+            const btn = document.getElementById('pay-btn');
+            const originalText = btn.innerHTML;
+
+            // État de chargement
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Simulation d'un délai réseau (1.5 secondes)
+            setTimeout(() => {
+                // Rétablir le bouton (au cas où on revienne)
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                // Aller à la page de reçu
+                showPage('receipt-page');
+
+                // Clear cart après paiement
+                cart = [];
+                updateCartCount();
+            }, 1500);
+        }
+
+        // Gestion des liens d'ancrage classiques pour qu'ils fonctionnent avec le système de pages
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', function (e) {
+                // Si le lien est juste "#", on ne fait rien (géré par onclick)
+                if (this.getAttribute('href') === '#') return;
+
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+
+                // On s'assure d'abord qu'on est sur la home
+                showPage('home');
+
+                // Puis on scroll vers l'élément
+                setTimeout(() => {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                        });
+                    }
+                }, 100); // Petit délai pour laisser le temps à la home de s'afficher
+            });
+        });
+
+        /* Chatbot script présent dans ton original */
+
         let customPack = [];
 
         function toggleChat() {
@@ -1529,7 +1702,7 @@
         function startCustomPack() {
             document.getElementById('chat-options').innerHTML = '';
             addBotMessage(
-                'Génial ! Choisissez 3 articles pour votre pack à seulement **45 DHS**.'
+                'Génial ! Choisissez 3 articles pour votre pack à seulement <strong>45 DHS</strong>.'
             );
 
             const products = [
@@ -1551,7 +1724,7 @@
         function addEntryToPack(itemName) {
             if (customPack.length < 3) {
                 customPack.push(itemName);
-                addBotMessage(`Ajouté : **${itemName}** (${customPack.length}/3)`);
+                addBotMessage(`Ajouté : <strong>${itemName}</strong> (${customPack.length}/3)`);
 
                 if (customPack.length === 3) {
                     addBotMessage('Votre pack est complet ! Je l\'ajoute à votre panier ?');
@@ -1566,14 +1739,13 @@
 
         function confirmCustomPack() {
             const packName = 'Pack Perso: ' + customPack.join(', ');
-            // On appelle la fonction addToCart déjà existante dans votre site
-            if (typeof addToCart === 'function') {
-                addToCart(
-                    packName,
-                    45,
-                    'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80'
-                );
-            }
+            // On appelle la fonction addToCart 
+            addToCart(
+                packName,
+                45,
+                'Pack Personnalisé',
+                'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80'
+            );
             toggleChat();
             customPack = [];
             // Reset du chat après 1 seconde
@@ -1582,6 +1754,26 @@
                 document.getElementById('chat-options').innerHTML = `<button onclick="startCustomPack()" class="col-span-2 bg-emerald-600 text-white py-2 rounded-xl text-xs font-bold uppercase italic hover:bg-emerald-700 transition">Créer mon pack (Custom)</button>`;
             }, 1000);
         }
+
+        // Mise à jour compteur panier initial
+        updateCartCount();
     </script>
+    <!-- 1. CSS (À ajouter dans vos styles) -->
+    <style>
+        .chatbot-window {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom right;
+        }
+        .chatbot-hidden {
+            transform: scale(0) translateY(100px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .chatbot-visible {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
 </body>
 </html>
